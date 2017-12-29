@@ -29,12 +29,9 @@ module.exports = function container (get, set, clear) {
   }
 
   function retry (method, args) {
-    if (method !== 'getTrades') {
-      console.error(('\nPoloniex API is down! unable to call ' + method + ', retrying in 10s').red)
-    }
     setTimeout(function () {
       exchange[method].apply(exchange, args)
-    }, 10000)
+    }, 1)
   }
 
   var orders = {}
@@ -62,12 +59,12 @@ module.exports = function container (get, set, clear) {
         args.end = opts.to
       }
       if (args.start && !args.end) {
-        // add 2 hours
-        args.end = args.start + 7200
+        // add 12 hours
+        args.end = args.start + 43200
       }
       else if (args.end && !args.start) {
-        // subtract 2 hours
-        args.start = args.end - 7200
+        // subtract 12 hours
+        args.start = args.end - 43200
       }
 
       client._public('returnTradeHistory', args, function (err, body) {
@@ -226,8 +223,9 @@ module.exports = function container (get, set, clear) {
         }
         var active = false
         if (!body.forEach) {
-          console.error('\nreturnOpenOrders odd result:')
-          console.error(body)
+          console.error('\nreturnOpenOrders odd result in checking state of order, trying again')
+          //console.error(body)
+          return retry('getOrder', args)
         }
         else {
           body.forEach(function (api_order) {

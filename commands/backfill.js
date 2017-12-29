@@ -5,27 +5,28 @@ var tb = require('timebucket')
 
 module.exports = function container (get, set, clear) {
   var c = get('conf') || {}
+
+  var collectionService = get('lib.collection-service')(get, set, clear)
+
   return function (program) {
     program
       .command('backfill [selector]')
       .description('download historical trades for analysis')
       .option('-d, --days <days>', 'number of days to acquire (default: ' + c.days + ')', Number, c.days)
       .action(function (selector, cmd) {
-        selector = get('lib.normalize-selector')(selector || c.selector)
-        var exchange_id = selector.split('.')[0]
-        var product_id = selector.split('.')[1]
-        var exchange = get('exchanges.' + exchange_id)
+        selector = get('lib.objectify-selector')(selector || c.selector)
+        var exchange = get('exchanges.' + selector.exchange_id)
         if (!exchange) {
-          console.error('cannot backfill ' + selector + ': exchange not implemented')
+          console.error('cannot backfill ' + selector.normalized + ': exchange not implemented')
           process.exit(1)
         }
-        var trades = get('db.trades')
-        get('db.mongo').collection('trades').ensureIndex({selector: 1, time: 1})
-        var resume_markers = get('db.resume_markers')
-        get('db.mongo').collection('resume_markers').ensureIndex({selector: 1, to: -1})
+
+        var trades = collectionService.getTrades();
+        var resume_markers = collectionService.getResumeMarkers();
+
         var marker = {
           id: crypto.randomBytes(4).toString('hex'),
-          selector: selector,
+          selector: selector.normalized,
           from: null,
           to: null,
           oldest_time: null,
@@ -38,7 +39,7 @@ module.exports = function container (get, set, clear) {
         var mode = exchange.historyScan
         var last_batch_id, last_batch_opts
         if (!mode) {
-          console.error('cannot backfill ' + selector + ': exchange does not offer historical data')
+          console.error('cannot backfill ' + selector.normalized + ': exchange does not offer historical data')
           process.exit(0)
         }
         if (mode === 'backward') {
@@ -48,7 +49,7 @@ module.exports = function container (get, set, clear) {
           target_time = new Date().getTime()
           start_time = new Date().getTime() - (86400000 * cmd.days)
         }
-        resume_markers.select({query: {selector: selector}}, function (err, markers) {
+        resume_markers.select({query: {selector: selector.normalized}}, function (err, markers) {
           if (err) throw err
           markers.sort(function (a, b) {
             if (mode === 'backward') {
@@ -63,7 +64,7 @@ module.exports = function container (get, set, clear) {
           })
           getNext()
           function getNext () {
-            var opts = {product_id: product_id}
+            var opts = {product_id: selector.product_id}
             if (mode === 'backward') {
               opts.to = marker.from
             }
@@ -74,7 +75,7 @@ module.exports = function container (get, set, clear) {
             last_batch_opts = opts
             exchange.getTrades(opts, function (err, trades) {
               if (err) {
-                console.error('err backfilling selector: ' + selector)
+                console.error('err backfilling selector: ' + selector.normalized)
                 console.error(err)
                 if (err.code === 'ETIMEDOUT' || err.code === 'ENOTFOUND' || err.code === 'ECONNRESET') {
                   console.error('retrying...')
@@ -113,7 +114,7 @@ module.exports = function container (get, set, clear) {
                 console.error('\nerror: getTrades() returned duplicate results')
                 console.error(opts)
                 console.error(last_batch_opts)
-                process.exit(1)
+                process.exit(0)
               }
               last_batch_id = trades[0].trade_id
               var tasks = trades.map(function (trade) {
@@ -154,9 +155,9 @@ module.exports = function container (get, set, clear) {
                     if (err) throw err
                     trade_counter += trades.length
                     day_trade_counter += trades.length
-                    var current_days_left = Math.ceil((mode === 'backward' ? marker.oldest_time - target_time : target_time - marker.newest_time) / 86400000)
+                    var current_days_left = 1 + (mode === 'backward' ? tb(marker.oldest_time - target_time).resize('1d').value : tb(target_time - marker.newest_time).resize('1d').value)
                     if (current_days_left >= 0 && current_days_left != days_left) {
-                      console.log('\n' + selector, 'saved', day_trade_counter, 'trades', current_days_left, 'days left')
+                      console.log('\n' + selector.normalized, 'saved', day_trade_counter, 'trades', current_days_left, 'days left')
                       day_trade_counter = 0
                       days_left = current_days_left
                     }
@@ -175,12 +176,13 @@ module.exports = function container (get, set, clear) {
                   })
                 })
               }
+
               runTasks()
             })
           }
           function saveTrade (trade, cb) {
-            trade.id = selector + '-' + String(trade.trade_id)
-            trade.selector = selector
+            trade.id = selector.normalized + '-' + String(trade.trade_id)
+            trade.selector = selector.normalized
             var cursor = exchange.getCursor(trade)
             if (mode === 'backward') {
               if (!marker.to) {
