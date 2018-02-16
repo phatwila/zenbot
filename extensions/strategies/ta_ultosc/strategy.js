@@ -10,7 +10,7 @@ module.exports = {
   getOptions: function () {
     this.option('period', 'period length eg 5m', String, '5m')
     this.option('min_periods', 'min. number of history periods', Number, 52)
-    this.option('signal', 'Provide signal and indicator "simple" (buy@65, sell@50), "low" (buy@65, sell@30), "trend" (buy@30, sell@70)', String, 'simple')
+    this.option('uo_signal', 'Provide signal and indicator "simple" (buy@65, sell@50), "low" (buy@65, sell@30), "trend" (buy@30, sell@70)', String, 'simple')
     this.option('timeperiod1', 'talib ULTOSC timeperiod1', Number, 7)
     this.option('timeperiod2', 'talib ULTOSC timeperiod2', Number, 14)
     this.option('timeperiod3', 'talib ULTOSC timeperiod3', Number, 28)
@@ -54,7 +54,7 @@ module.exports = {
 
       if (s.period.ultosc && s.period.ultosc > 0) {
 
-        if (s.options.signal == 'simple') {
+        if (s.options.uo_signal == 'simple') {
           // use defensive indicator trigger
 
           if (s.period.ultosc > 65) {
@@ -63,7 +63,7 @@ module.exports = {
             s.period.trend_ultosc = 'down'
           }
 
-        } else if (s.options.signal == 'low') {
+        } else if (s.options.uo_signal == 'low') {
           // use recovery indicator trigger
 
           if(s.period.ultosc > 65) {
@@ -71,7 +71,7 @@ module.exports = {
           } else if(s.period.ultosc < 30 && signals.bottom == 0) {
             s.period.trend_ultosc = 'down'
           }
-        } else if (s.options.signal == 'trend') {
+        } else if (s.options.uo_signal == 'trend') {
           // lets got with the masses
 
           if(s.period.ultosc > 30 && signals.bottom > 0) {
@@ -81,10 +81,10 @@ module.exports = {
           }
         }
 
-        signals.bottom = s.period.ultosc < 30 ? signals.bottom + 1 : 0;
-        signals.top = s.period.ultosc > 70 ? signals.top + 1 : 0;
+        signals.bottom = s.period.ultosc < 30 ? signals.bottom + 1 : 0
+        signals.top = s.period.ultosc > 70 ? signals.top + 1 : 0
 
-        s.signales = signals;
+        s.signales = signals
       }
 
       if (s.period.trend_ultosc == 'up') {
@@ -114,7 +114,7 @@ module.exports = {
     let cols = []
 
     if (typeof s.period.ultosc === 'number') {
-      let signal = z(8, n(s.period.ultosc).format('0.0000'), ' ');
+      let signal = z(8, n(s.period.ultosc).format('0.0000'), ' ')
 
       if (s.period.ultosc <= 30) {
         cols.push(signal.red)

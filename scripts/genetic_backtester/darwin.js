@@ -899,10 +899,10 @@ const strategies = {
 
     // -- strategy
     // have to be minimum 2 because talib will throw an "TA_BAD_PARAM" error
-	signal: UltoscSignal(),
-    timeperiod1: Range(1, 100),
-    timeperiod2: Range(1, 100),
-    timeperiod3: Range(1, 100),
+	uo_signal: UltoscSignal(),
+    timeperiod1: Range(1, 13),
+    timeperiod2: Range(14, 27),
+    timeperiod3: Range(28, 100),
     overbought_rsi_periods: Range(1, 50),
     overbought_rsi: Range(20, 100)
   },  
