@@ -607,6 +607,23 @@ const strategies = {
     bollinger_upper_bound_pct: RangeFloat(-1, 30),
     bollinger_lower_bound_pct: RangeFloat(-1, 30)
   },
+  buy_at_sell_at: {
+    // -- common
+    period_length: RangePeriod(1, 120, 'm'),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    //sell_stop_pct: Range0(1, 50),
+    //buy_stop_pct: Range0(1, 50),
+    //profit_stop_enable_pct: Range0(1, 20),
+    //profit_stop_pct: Range(1,20),
+
+	// -- strategy
+	buy_at: RangeFloat(1.01, 1.20),
+	sell_at: RangeFloat(0.50, 0.99),
+	stop_loss_pct: RangeFloat(0.50, 0.99),
+	sell_at_up: RangeFloat(1.01, 1.20)
+  },
   cci_srsi: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
@@ -860,6 +877,23 @@ const strategies = {
     down_trend_threshold: Range(0, 50),
     overbought_rsi_periods: Range(1, 50),
     overbought_rsi: Range(20, 100)
+  },
+  tma: {
+    // -- common
+    period_length: RangePeriod(1, 120, 'm'),
+    min_periods: Range(1, 200),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    sell_stop_pct: Range0(1, 50),
+    buy_stop_pct: Range0(1, 50),
+    profit_stop_enable_pct: Range0(1, 20),
+    profit_stop_pct: Range(1,20),
+
+	// -- strategy
+	tma_short: Range(2, 20),
+	tma_medium: Range(20, 60),
+	tma_long: Range(60, 200)
   },
   trend_bollinger: {
     // -- common
