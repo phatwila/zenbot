@@ -582,6 +582,7 @@ function RangeNeuralActivation  () {
   }
   return r
 }
+
 function RangeBoolean  () {
   var r = {
     type: 'truefalse'
@@ -589,6 +590,12 @@ function RangeBoolean  () {
   return r
 }
 
+function UltoscSignal  () {
+  var r = {
+    type: 'simplelowtrend'
+  }
+  return r
+}
 const strategies = {
   bollinger: {
     // -- common
@@ -878,6 +885,27 @@ const strategies = {
     overbought_rsi_periods: Range(1, 50),
     overbought_rsi: Range(20, 100)
   },
+  ta_ultosc: {
+    // -- common
+    period_length: RangePeriod(1, 120, 'm'),
+    min_periods: Range(1, 200),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    sell_stop_pct: Range0(1, 50),
+    buy_stop_pct: Range0(1, 50),
+    profit_stop_enable_pct: Range0(1, 20),
+    profit_stop_pct: Range(1,20),
+
+    // -- strategy
+    // have to be minimum 2 because talib will throw an "TA_BAD_PARAM" error
+	signal: UltoscSignal(),
+    timeperiod1: Range(1, 100),
+    timeperiod2: Range(1, 100),
+    timeperiod3: Range(1, 100),
+    overbought_rsi_periods: Range(1, 50),
+    overbought_rsi: Range(20, 100)
+  },  
   tma: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
