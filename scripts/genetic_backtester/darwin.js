@@ -506,7 +506,7 @@ function processOutput  (output,taskStrategyName, pheno) {
     days: days,
     period_length: params.period_length,
     min_periods: params.min_periods,
-    markdown_buy_pct: params.markdown_buy_pct,
+    //markdown_buy_pct: params.markdown_buy_pct,
     markup_sell_pct: params.markup_sell_pct,
     order_type: params.order_type,
     wlRatio: losses > 0 ? roundp(wins / losses, 3) : 'Infinity',
@@ -600,8 +600,8 @@ const strategies = {
   bollinger: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
-    markdown_buy_pct: RangeFloat(-1, 5),
-    markup_sell_pct: RangeFloat(-1, 5),
+    ////markdown_buy_pct: RangeFloat(-1, 5),
+    //markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
     buy_stop_pct: Range0(1, 50),
@@ -617,8 +617,8 @@ const strategies = {
   buy_at_sell_at: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
-    markdown_buy_pct: RangeFloat(-1, 5),
-    markup_sell_pct: RangeFloat(-1, 5),
+    ////markdown_buy_pct: RangeFloat(-1, 5),
+    //markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     //sell_stop_pct: Range0(1, 50),
     //buy_stop_pct: Range0(1, 50),
@@ -635,7 +635,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -660,7 +660,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 400, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -679,7 +679,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -699,7 +699,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -720,8 +720,8 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 2500),
-    markdown_buy_pct: RangeFloat(-1, 5),
-    markup_sell_pct: RangeFloat(-1, 5),
+    ////markdown_buy_pct: RangeFloat(-1, 5),
+    //markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
     buy_stop_pct: Range0(1, 50),
@@ -735,7 +735,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -756,7 +756,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -776,7 +776,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(2, 100),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -792,7 +792,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -808,7 +808,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -834,7 +834,7 @@ const strategies = {
     // reference in extensions is given in ms have not heard of an exchange that supports 500ms thru api so setting min at 1 second
     period_length: RangePeriod(1, 7200, 's'),
     min_periods: Range(1, 2500),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -850,7 +850,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -867,7 +867,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -889,7 +889,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -910,8 +910,8 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
-    markup_sell_pct: RangeFloat(-1, 5),
+    ////markdown_buy_pct: RangeFloat(-1, 5),
+    //markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
     buy_stop_pct: Range0(1, 50),
@@ -926,7 +926,7 @@ const strategies = {
   trend_bollinger: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -944,7 +944,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -961,7 +961,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 400, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -979,7 +979,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -999,7 +999,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    markdown_buy_pct: RangeFloat(-1, 5),
+    //markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
