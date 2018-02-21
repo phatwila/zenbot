@@ -31,14 +31,11 @@ let VERSION = 'Zenbot 4 Genetic Backtester v0.2.2'
 
 let PARALLEL_LIMIT = (process.env.PARALLEL_LIMIT && +process.env.PARALLEL_LIMIT) || require('os').cpus().length
 
-let TREND_EMA_MIN = 20
-let TREND_EMA_MAX = 20
 
-let OVERSOLD_RSI_MIN = 20
-let OVERSOLD_RSI_MAX = 35
 
-let OVERSOLD_RSI_PERIODS_MIN = 15
-let OVERSOLD_RSI_PERIODS_MAX = 25
+
+
+
 
 let iterationCount = 0
 
@@ -506,7 +503,7 @@ function processOutput  (output,taskStrategyName, pheno) {
     days: days,
     period_length: params.period_length,
     min_periods: params.min_periods,
-    //markdown_buy_pct: params.markdown_buy_pct,
+    markdown_buy_pct: params.markdown_buy_pct,
     markup_sell_pct: params.markup_sell_pct,
     order_type: params.order_type,
     wlRatio: losses > 0 ? roundp(wins / losses, 3) : 'Infinity',
@@ -583,25 +580,32 @@ function RangeNeuralActivation  () {
   return r
 }
 
+function RangeMaType  () {
+  var r = {
+    type: 'maType'
+  }
+  return r
+}
+
 function RangeBoolean  () {
   var r = {
     type: 'truefalse'
   }
   return r
 }
-
-function UltoscSignal  () {
-  var r = {
-    type: 'simplelowtrend'
+function RangeSignalType () {
+  var r ={
+    type: 'uscSignalType'
   }
   return r
 }
+
 const strategies = {
   bollinger: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
-    ////markdown_buy_pct: RangeFloat(-1, 5),
-    //markup_sell_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
     buy_stop_pct: Range0(1, 50),
@@ -635,7 +639,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -660,7 +664,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 400, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -679,7 +683,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -699,7 +703,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -720,8 +724,8 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 2500),
-    ////markdown_buy_pct: RangeFloat(-1, 5),
-    //markup_sell_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
     buy_stop_pct: Range0(1, 50),
@@ -735,7 +739,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -756,7 +760,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -776,7 +780,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(2, 100),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -792,7 +796,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -808,7 +812,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -834,7 +838,7 @@ const strategies = {
     // reference in extensions is given in ms have not heard of an exchange that supports 500ms thru api so setting min at 1 second
     period_length: RangePeriod(1, 7200, 's'),
     min_periods: Range(1, 2500),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -850,7 +854,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -859,15 +863,15 @@ const strategies = {
     profit_stop_pct: Range(1,20),
 
     // -- strategy
-    trend_ema: Range(TREND_EMA_MIN, TREND_EMA_MAX),
-    oversold_rsi_periods: Range(OVERSOLD_RSI_PERIODS_MIN, OVERSOLD_RSI_PERIODS_MAX),
-    oversold_rsi: Range(OVERSOLD_RSI_MIN, OVERSOLD_RSI_MAX)
+    trend_ema: Range(1, 40),
+    oversold_rsi_periods: Range(5, 50),
+    oversold_rsi: Range(20, 100)
   },
   ta_macd: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -885,11 +889,10 @@ const strategies = {
     overbought_rsi_periods: Range(1, 50),
     overbought_rsi: Range(20, 100)
   },
-  ta_ultosc: {
-    // -- common
+  ta_macd_ext:{
     period_length: RangePeriod(1, 120, 'm'),
-    min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    min_periods: Range(1, 104),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -897,15 +900,73 @@ const strategies = {
     profit_stop_enable_pct: Range0(1, 20),
     profit_stop_pct: Range(1,20),
 
-    // -- strategy
     // have to be minimum 2 because talib will throw an "TA_BAD_PARAM" error
-	uo_signal: UltoscSignal(),
-    timeperiod1: Range(1, 13),
-    timeperiod2: Range(14, 27),
-    timeperiod3: Range(28, 100),
+    ema_short_period: Range(2, 20),
+    ema_long_period: Range(20, 100),
+    signal_period: Range(1, 20),
+    fast_ma_type: RangeMaType(),
+    slow_ma_type: RangeMaType(),
+    signal_ma_type: RangeMaType(),
+    default_ma_type: RangeMaType(),
+    //    this.option('default_ma_type', 'set default ma_type for fast, slow and signal. You are able to overwrite single types separately (fast_ma_type, slow_ma_type, signal_ma_type)', String, 'SMA')
+    up_trend_threshold: Range(0, 50),
+    down_trend_threshold: Range(0, 50),
     overbought_rsi_periods: Range(1, 50),
-    overbought_rsi: Range(20, 100)
-  },  
+    overbought_rsi: Range(20, 100)    
+  },
+  ta_ppo: {
+    period_length: RangePeriod(1, 120, 'm'),
+    min_periods: Range(1, 104),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    sell_stop_pct: Range0(1, 50),
+    buy_stop_pct: Range0(1, 50),
+    profit_stop_enable_pct: Range0(1, 20),
+    profit_stop_pct: Range(1,20),
+
+    // have to be minimum 2 because talib will throw an "TA_BAD_PARAM" error
+    ema_short_period: Range(2, 20),
+    ema_long_period: Range(20, 100),
+    signal_period: Range(1, 20),
+    ma_type: RangeMaType(),
+    overbought_rsi_periods: Range(1, 50),
+    overbought_rsi: Range(20, 100)    
+  },
+  ta_trix: {
+    period_length: RangePeriod(1, 120, 'm'),
+    min_periods: Range(1, 104),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    sell_stop_pct: Range0(1, 50),
+    buy_stop_pct: Range0(1, 50),
+    profit_stop_enable_pct: Range0(1, 20),
+    profit_stop_pct: Range(1,20),
+    
+    timeperiod: Range(1,60),
+    overbought_rsi_periods: Range(1, 50),
+    overbought_rsi: Range(20, 100)   
+  },
+  ta_ultosc:
+  {
+    period_length: RangePeriod(1, 120, 'm'),
+    min_periods: Range(1, 104),
+    markdown_buy_pct: RangeFloat(-1, 5),
+    markup_sell_pct: RangeFloat(-1, 5),
+    order_type: RangeMakerTaker(),
+    sell_stop_pct: Range0(1, 50),
+    buy_stop_pct: Range0(1, 50),
+    profit_stop_enable_pct: Range0(1, 20),
+    profit_stop_pct: Range(1,20),
+    
+    signal:RangeSignalType(),
+    timeperiod1:Range(1,50),
+    timeperiod2:Range(1,50),   
+    timeperiod3:Range(1,50), 
+    overbought_rsi_periods: Range(1, 50),
+    overbought_rsi: Range(20, 100)   
+  },
   tma: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
@@ -926,7 +987,7 @@ const strategies = {
   trend_bollinger: {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -944,7 +1005,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -953,15 +1014,15 @@ const strategies = {
     profit_stop_pct: Range(1,20),
 
     // -- strategy
-    trend_ema: Range(TREND_EMA_MIN, TREND_EMA_MAX),
-    oversold_rsi_periods: Range(OVERSOLD_RSI_PERIODS_MIN, OVERSOLD_RSI_PERIODS_MAX),
-    oversold_rsi: Range(OVERSOLD_RSI_MIN, OVERSOLD_RSI_MAX)
+    trend_ema: Range(1, 40),
+    oversold_rsi_periods: Range(5, 50),
+    oversold_rsi: Range(20, 100)
   },
   trendline: {
     // -- common
     period_length: RangePeriod(1, 400, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -979,7 +1040,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 100),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
@@ -999,7 +1060,7 @@ const strategies = {
     // -- common
     period_length: RangePeriod(1, 120, 'm'),
     min_periods: Range(1, 200),
-    //markdown_buy_pct: RangeFloat(-1, 5),
+    markdown_buy_pct: RangeFloat(-1, 5),
     markup_sell_pct: RangeFloat(-1, 5),
     order_type: RangeMakerTaker(),
     sell_stop_pct: Range0(1, 50),
