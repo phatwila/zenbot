@@ -1,6 +1,7 @@
 //Ported from https://github.com/pushkarnagle/gekko-buy_atsell_at
-var z = require('zero-fill'),
-    n = require('numbro')
+var z = require('zero-fill')
+  , n = require('numbro')
+  , Phenotypes = require('../../../lib/phenotype')
 var previous_action = 'sell'
 var previous_action_price = Infinity
 
@@ -9,8 +10,8 @@ module.exports = {
     description: 'Simple strategy that buys and sells at predefined percentages with built in stop-loss and market-up rebuying functionality.',
 
     getOptions: function() {
-        this.option('period', 'period length, same as --periodLength', String, '2m')
-        this.option('period_length', 'period length, same as --period', String, '2m')
+        this.option('period', 'period length, same as --periodLength', String, '10m')
+        this.option('period_length', 'period length, same as --period', String, '10m')
         this.option('min_periods', 'min. number of history periods', Number, 60)
         this.option('buy_at', 'Buy when the price surges to x% of the bought price or current balance on initial start (e.g. 1.15 for 15%).', Number, '1.05')
         this.option('sell_at', 'Buy again if the price goes down to u% (0.97 for 3%) of the sold price.', Number, '0.97')
@@ -84,5 +85,23 @@ module.exports = {
         cols.push(z(8, n(s.period.close).format('0.00'), ' ')[pcColor])
         cols.push(z(8, n(s.period.sls).format('0.00'), ' ')[paColor])
         return cols
+    },
+
+    phenotypes: {
+        // -- common
+        period_length: Phenotypes.RangePeriod(1, 120, 'm'),
+        markdown_buy_pct: Phenotypes.RangeFloat(-1, 5),
+        markup_sell_pct: Phenotypes.RangeFloat(-1, 5),
+        order_type: Phenotypes.ListOption(['maker', 'taker']),
+        sell_stop_pct: Phenotypes.Range0(1, 50),
+        buy_stop_pct: Phenotypes.Range0(1, 50),
+        profit_stop_enable_pct: Phenotypes.Range0(1, 20),
+        profit_stop_pct: Phenotypes.Range(1, 20),
+
+        // -- strategy
+        buy_at: Phenotypes.RangeFloat(1.01, 1.20),
+        sell_at: Phenotypes.RangeFloat(0.60, 0.99),
+        stop_loss_pct: Phenotypes.RangeFloat(0.60, 0.99),
+        sell_at_up: Phenotypes.RangeFloat(1.01, 1.20)
     }
 }
