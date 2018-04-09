@@ -1,7 +1,8 @@
 //Ported from https://github.com/askmike/gekko/blob/develop/strategies/TMA.js
-var z = require('zero-fill'),
-    n = require('numbro'),
-    sma = require('../../../lib/sma')
+var z = require('zero-fill')
+  , n = require('numbro')
+  ,  sma = require('../../../lib/sma')
+  , Phenotypes = require('../../../lib/phenotype')
 var previous_action = null
 
 module.exports = {
@@ -64,5 +65,21 @@ module.exports = {
         cols.push(z(4, n(s.options.tma_long).format('0'), ' ')[color])
 
         return cols
-    }
+  },
+
+  phenotypes: {
+    period_length: Phenotypes.RangePeriod(5, 120, 'm'),
+    min_periods: Phenotypes.Range(20, 104),
+    markdown_buy_pct: Phenotypes.RangeFloat(-1, 5),
+    markup_sell_pct: Phenotypes.RangeFloat(-1, 5),
+    order_type: Phenotypes.ListOption(['maker', 'taker']),
+    sell_stop_pct: Phenotypes.Range0(1, 50),
+    buy_stop_pct: Phenotypes.Range0(1, 50),
+    profit_stop_enable_pct: Phenotypes.Range0(1, 20),
+    profit_stop_pct: Phenotypes.Range(1,20),
+
+    tma_short: Phenotypes.Range(1, 100),
+    tma_medium: Phenotypes.Range(1, 100),
+    tma_long: Phenotypes.Range(1, 100)
+  }
 }
