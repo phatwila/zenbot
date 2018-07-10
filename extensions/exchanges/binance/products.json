@@ -2734,7 +2734,7 @@
     "asset": "ZIL",
     "currency": "BNB",
     "min_size": "1.00000000",
-    "max_size": "10000.00000000",
+    "max_size": "0.03229000",
     "increment": "0.000001",
     "asset_increment": "1.",
     "label": "ZIL/BNB"
@@ -3598,5 +3598,105 @@
     "increment": "0.0001",
     "asset_increment": "0.01",
     "label": "VEN/USDT"
+  },
+  {
+    "id": "KEYBTC",
+    "asset": "KEY",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "KEY/BTC"
+  },
+  {
+    "id": "KEYETH",
+    "asset": "KEY",
+    "currency": "ETH",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "KEY/ETH"
+  },
+  {
+    "id": "NASBTC",
+    "asset": "NAS",
+    "currency": "BTC",
+    "min_size": "0.01000000",
+    "max_size": "100000.00000000",
+    "increment": "0.0000001",
+    "asset_increment": "0.01",
+    "label": "NAS/BTC"
+  },
+  {
+    "id": "NASETH",
+    "asset": "NAS",
+    "currency": "ETH",
+    "min_size": "0.01000000",
+    "max_size": "100000.00000000",
+    "increment": "0.000001",
+    "asset_increment": "0.01",
+    "label": "NAS/ETH"
+  },
+  {
+    "id": "NASBNB",
+    "asset": "NAS",
+    "currency": "BNB",
+    "min_size": "0.01000000",
+    "max_size": "10000.00000000",
+    "increment": "0.00001",
+    "asset_increment": "0.01",
+    "label": "NAS/BNB"
+  },
+  {
+    "id": "MFTBTC",
+    "asset": "MFT",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "MFT/BTC"
+  },
+  {
+    "id": "MFTETH",
+    "asset": "MFT",
+    "currency": "ETH",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "MFT/ETH"
+  },
+  {
+    "id": "MFTBNB",
+    "asset": "MFT",
+    "currency": "BNB",
+    "min_size": "1.00000000",
+    "max_size": "10000.00000000",
+    "increment": "0.000001",
+    "asset_increment": "1.",
+    "label": "MFT/BNB"
+  },
+  {
+    "id": "DENTBTC",
+    "asset": "DENT",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "DENT/BTC"
+  },
+  {
+    "id": "DENTETH",
+    "asset": "DENT",
+    "currency": "ETH",
+    "min_size": "1.00000000",
+    "max_size": "100000.00000000",
+    "increment": "0.00000001",
+    "asset_increment": "1.",
+    "label": "DENT/ETH"
   }
 ]
